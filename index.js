@@ -34,7 +34,7 @@ async function run() {
         //Reviews collection
         const reviewCollection = database.collection('reviews');
 
-        //Get products fan API
+        //Get products API
         app.get('/products', async (req, res) => {
             const cursor = await productCollection.find({});
             const products = await cursor.toArray();
@@ -85,7 +85,7 @@ async function run() {
             res.json(result);
             console.log(result)
         });
-        //for update user
+        //for update user with upsert
         app.put('/users', async (req, res) => {
             const user = req.body;
             //filter email 
@@ -98,7 +98,7 @@ async function run() {
             const result = await usersCollection.updateOne(filter, updateDoc, options);
             res.json(result);
         });
-        // make admin user
+        // Make admin user
         app.put('/users/admin', async (req, res) => {
             // console.log(req.body)
             const filter = { email: req.body.email }
@@ -148,7 +148,7 @@ async function run() {
             res.json(result);
         });
 
-        // DELETE API
+        // DELETE Order API
         app.delete('/orders/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };

@@ -59,6 +59,14 @@ async function run() {
             // console.log(result)
             res.json(result)
         });
+        //DELETE products
+        app.delete('/products/:id', async (req, res) => {
+            // const id = req.params.id;
+            const query = { _id: ObjectId(req.params.id) };
+            const result = await productCollection.deleteOne(query);
+            res.json(result);
+        });
+
         //USER GET API
         app.get('/users/:email', async (req, res) => {
             const email = req.params.email;
@@ -99,34 +107,6 @@ async function run() {
                 const documents = await usersCollection.updateOne(filter, { $set: { role: 'admin' } })
                 console.log(documents)
             }
-            // else{
-
-            // } 
-            // console.log(result)
-
-            // const user = req.body;
-            // console.log('put', user)
-            // const filter = { email: user.email };
-            // const updateDoc = { $set: { role: 'admin' } };
-            // const result = await usersCollection.updateOne(filter, updateDoc);
-            // res.json(result);
-
-            // const requester = req.decodedEmail;
-            // if (requester) {
-            //     const requesterAccount = await usersCollection.findOne({ email: requester });
-            //     if (requesterAccount.role === 'admin') {
-            //         const filter = { email: user.email };
-            //         const updateDoc = { $set: { role: 'admin' } };
-
-            //         const result = await usersCollection.updateOne(filter, updateDoc);
-            //         res.json(result);
-            //     }
-            // }
-            // else {
-            //     res.status(403).json({ message: 'you do not have access to make admin' });
-            // }
-
-
         })
 
         //GET ORDER
@@ -140,6 +120,7 @@ async function run() {
             const result = await orderCollection.find({}).toArray();
             res.send(result);
         });
+
         //Update status 
         app.put('/updateStatus/:id', async (req, res) => {
             const filter = { _id: ObjectId(req.params.id) }

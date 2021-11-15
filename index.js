@@ -130,7 +130,7 @@ async function run() {
                 },
             });
             res.send(result);
-            console.log(result)
+            // console.log(result)
         })
 
         // POST for Order
